@@ -1,9 +1,12 @@
 package org.simplycodestudio.TWINO.Task.loanapplication.loan;
 
 import org.joda.time.DateTime;
-import org.simplycodestudio.TWINO.Task.loanapplication.utils.DateConverterUtil;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -16,19 +19,34 @@ public class LoanDaoService {
     private static List<Proposal> proposals = new ArrayList<>();
 
     private static int loansCount = 1;
+    private static int proposalsCount=0;
+
+    private Proposal proposal;
     static {
 
-        loans.add(new Loan(1, 10000, DateConverterUtil.formatDate(new Date())));
+        loans.add(new Loan(1, 10000, LocalDate.of(2020,01,02)));
     }
 
     public List<Loan> findAll() {
         return loans;
     }
 
-    public Loan save(Loan loan) {
+    public List<Proposal> findAllproposals() {
+        return proposals;
+    }
+
+    public Loan save(Loan loan, HttpServletRequest request) {
+
+        proposal =new Proposal();
         if (loan.getId()==null){
-            loan.setId(++loansCount);
+              loan.setId(++loansCount);
         }
+        proposal.setLoanId(loansCount);
+        proposal.setBorrowerIP(request.getRemoteAddr());
+        proposal.setId(++proposalsCount);
+        proposal.setApplicationSubmissionDate(DateTime.now());
+
+        proposals.add(proposal);
         loans.add(loan);
         return loan;
     }

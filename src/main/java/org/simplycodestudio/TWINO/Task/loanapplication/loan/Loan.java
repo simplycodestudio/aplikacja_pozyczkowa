@@ -1,8 +1,12 @@
 package org.simplycodestudio.TWINO.Task.loanapplication.loan;
 
-import org.joda.time.DateTime;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 
 public class Loan {
@@ -10,16 +14,14 @@ public class Loan {
 
     private Integer id;
 
-    private String ip;
-
+    @Positive
     private Integer amount;
 
+    @FutureOrPresent
+    private LocalDate loanStartDate;
 
-    private String loanStartDate;
 
-    
-
-    public Loan(Integer id, Integer amount, String loanStartDate) {
+    public Loan(Integer id, Integer amount, LocalDate loanStartDate) {
         this.id = id;
         this.amount = amount;
         this.loanStartDate= loanStartDate;
@@ -42,21 +44,12 @@ public class Loan {
         this.amount = amount;
     }
 
-    public String getLoanStartDate() {
+    public LocalDate getLoanStartDate() {
         return loanStartDate;
     }
 
-    public void setLoanStartDate(String loanStartDate) {
+    public void setLoanStartDate(LocalDate loanStartDate) {
         this.loanStartDate = loanStartDate;
-    }
-
-
-//    public String getIp() {
-//        return ip;
-//    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
     }
 
     @Override

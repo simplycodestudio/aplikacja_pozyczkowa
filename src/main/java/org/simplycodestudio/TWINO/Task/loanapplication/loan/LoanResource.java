@@ -18,7 +18,7 @@ import static org.springframework.hateoas.server.mvc.ControllerLinkBuilder.*;
 @RestController
 public class LoanResource {
 
-    //@Autowired
+
     private LoanDaoService service;
     @Autowired
     public LoanResource(LoanDaoService service) {
@@ -30,6 +30,12 @@ public class LoanResource {
     public List<Loan> retrieveAllLoans() {
 
         return service.findAll();
+    }
+
+    @GetMapping("/props")
+    public List<Proposal> retrieveAllProps() {
+
+        return service.findAllproposals();
     }
 
     @GetMapping("/loans/{id}")
@@ -56,13 +62,15 @@ public class LoanResource {
 
 
     @PostMapping("/loans")
-    public ResponseEntity<Object> createLoan(@Valid @RequestBody Loan loan, @Valid @RequestBody Proposal proposal, HttpServletRequest request) {
-        Loan savedLoan = service.save(loan);
+    public ResponseEntity<Object> createLoan(@Valid @RequestBody Loan loan, HttpServletRequest request) {
+        Loan savedLoan = service.save(loan, request);
+
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedLoan.getId()).toUri();
+
 
         return ResponseEntity.created(location).build();
 

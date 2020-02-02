@@ -9,6 +9,8 @@ public class Proposal {
     private String borrowerIP;
     private DateTime applicationSubmissionDate;
 
+    public Proposal(){};
+
     public Proposal(Integer id, Integer loanId, String borrowerIP, DateTime applicationSubmissionDate) {
         this.id = id;
         this.loanId = loanId;

@@ -66,6 +66,7 @@ public class LoanResource {
         Loan savedLoan = service.save(loan, request);
 
 
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -74,6 +75,13 @@ public class LoanResource {
 
         return ResponseEntity.created(location).build();
 
+    }
+
+    @PutMapping("/loans/{id}")
+    public void extendRepaymentDeadline(@PathVariable int loanId) {
+
+        System.out.println("Loan id is " + loanId);
+      //  Loan updatedLoan = service.update(loanId);
     }
 
 

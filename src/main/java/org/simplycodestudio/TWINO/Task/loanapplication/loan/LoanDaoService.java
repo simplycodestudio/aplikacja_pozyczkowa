@@ -1,15 +1,13 @@
 package org.simplycodestudio.TWINO.Task.loanapplication.loan;
 
 import org.joda.time.DateTime;
+import org.simplycodestudio.TWINO.Task.loanapplication.validators.ValidateRequiredCases;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,6 +45,13 @@ public class LoanDaoService {
         proposal.setApplicationSubmissionDate(DateTime.now());
 
         proposals.add(proposal);
+
+        System.out.println(ValidateRequiredCases.isProposalWasSubmittedAtNightZone(DateTime.now()));
+        System.out.println(ValidateRequiredCases.isAmountExceedMaxValue(loan.getAmount()));
+        for (Proposal p: proposals) {
+            System.out.println(p.getBorrowerIP());
+        }
+        System.out.println(ValidateRequiredCases.isProposalWasSubmitedThreeTimesFromSameIp(proposals));
         loans.add(loan);
         return loan;
     }
@@ -74,4 +79,8 @@ public class LoanDaoService {
         return null;
     }
 
+    public Loan update(String loan) {
+
+        return null;
+    }
 }

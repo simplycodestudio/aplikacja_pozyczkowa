@@ -29,6 +29,7 @@ http://localhost:8080/loans/{id}
 ```
 
 ###Logika bizesowa
+
 Zasady:
 + Kredytobiorca może złożyć wniosek o przyznanie pożyczki na określoną kwotę oraz preferowany czas spłaty. 
 + Kredytobiorca może przedłużyć czas spłaty pożyczki tylko raz.
@@ -36,7 +37,9 @@ Zasady:
 Przeciwwskazania:
 + Kredytobiorcy nie udziela się pożyczki na maksymalną kwotę, jeśli składa on wniosek w godzinach 00:00 - 06:00;
 + Kredytobiorca nie może złożyć więcej jak 3 wnioski z jednego adresu IP
+
 ####variables.properties:
+
 Zawiera stałe dane podane w treści wytycznych:
 + amount.max - maksymalna kwota pożyczki;
 + is.night - flaga wprowadzająca w tryb nocny (00:00 - 6:00);
@@ -44,6 +47,7 @@ Zawiera stałe dane podane w treści wytycznych:
 + proposals.from.same.ip - ilość wniosków, które można złożyć z tego samego adresu.
 
 ###Uruchomienie 
+
 Aplikacja uruchamia się w IDE lub przy pomocy komendy:
 ```javascript
  mvn spring-boot:run

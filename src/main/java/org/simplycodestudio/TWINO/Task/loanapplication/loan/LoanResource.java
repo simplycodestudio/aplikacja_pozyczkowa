@@ -1,6 +1,8 @@
 package org.simplycodestudio.TWINO.Task.loanapplication.loan;
 
 
+
+import org.simplycodestudio.TWINO.Task.loanapplication.exceptions.LoanNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.ControllerLinkBuilder;
@@ -29,43 +31,34 @@ public class LoanResource {
     @GetMapping("/loans")
     public List<Loan> retrieveAllLoans() {
 
-        return service.findAll();
+        return service.findAllLoans();
     }
 
     @GetMapping("/props")
     public List<Proposal> retrieveAllProps() {
 
-        return service.findAllproposals();
+        return service.findAllProposals();
     }
 
     @GetMapping("/loans/{id}")
     public EntityModel<Loan> retrieveLoans(@PathVariable int id){
-        Loan loan = service.findOne(id);
+        Loan loan = service.findOneLoan(id);
         if (loan==null) {
-            throw new UserNotFoundException("id-" + id);
+            throw new LoanNotFoundException("id-" + id);
         }
 
         EntityModel<Loan> resource = new EntityModel<Loan>(loan);
         ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllLoans());
-        resource.add(linkTo.withRel("all-users "));
+        resource.add(linkTo.withRel("all-loans "));
 
         return resource;
     }
 
-    @DeleteMapping("/loans/{id}")
-    public void deleteLoans(@PathVariable int id){
-        Loan loan = service.deleteById(id);
-        if (loan==null) {
-            throw new UserNotFoundException("id-" + id);
-        }
-    }
 
 
     @PostMapping("/loans")
     public ResponseEntity<Object> createLoan(@Valid @RequestBody Loan loan, HttpServletRequest request) {
         Loan savedLoan = service.save(loan, request);
-
-
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -78,10 +71,12 @@ public class LoanResource {
     }
 
     @PutMapping("/loans/{id}")
-    public void extendRepaymentDeadline(@PathVariable int loanId) {
+    public void prolongRepaymentDate(@PathVariable int id) {
 
-        System.out.println("Loan id is " + loanId);
-      //  Loan updatedLoan = service.update(loanId);
+        Loan updatedLoan= service.update(id);
+        if (updatedLoan==null) {
+            throw new LoanNotFoundException("id-" + id);
+        }
     }
 
 

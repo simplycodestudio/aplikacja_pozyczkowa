@@ -1,12 +1,12 @@
-package org.simplycodestudio.TWINO.Task.loanapplication.validators;
+package org.simplycodestudio.TWINO.Task.loanapplication.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.ReadableInstant;
 import org.simplycodestudio.TWINO.Task.loanapplication.loan.Proposal;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ValidateRequiredCases {
@@ -16,7 +16,10 @@ public class ValidateRequiredCases {
     private static Interval interval;
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle("variables");
     private static Boolean switchTimeToNightMode = Boolean.parseBoolean(resourceBundle.getString("is.night"));
-    private static Integer maxAmount = Integer.parseInt(resourceBundle.getString("amount.max"));
+    private static int maxAmount = Integer.parseInt(resourceBundle.getString("amount.max"));
+    private static int repaymentProlongation = Integer.parseInt(resourceBundle.getString("repayment.prolongation"));
+    private static int proposalFromTheSameIP = Integer.parseInt(resourceBundle.getString("proposals.from.same.ip"));
+
 
 
     public static boolean isProposalWasSubmittedAtNightZone(DateTime submissionTime) {
@@ -32,7 +35,11 @@ public class ValidateRequiredCases {
         return amount>=maxAmount;
     }
 
-    public static boolean isProposalWasSubmitedThreeTimesFromSameIp(List<Proposal> borrowerIP) {
-      return true;
+    public static boolean isProposalWasSubmitedThreeTimesFromSameIp(int borrowerIP) {
+        return borrowerIP>=proposalFromTheSameIP;
+    }
+
+    public static LocalDate prolongLoanRepaymentIfThisIsFirstTime(LocalDate dateToProlongation) {
+        return dateToProlongation.plusDays(repaymentProlongation);
     }
 }

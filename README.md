@@ -16,7 +16,7 @@ body
 ```javascript
 GET
 http://localhost:8080/loans;
-http://localhost:8080//loans/{id}
+http://localhost:8080/loans/{id}
 http://localhost:8080/props;
 ```
 
@@ -28,7 +28,7 @@ PUT
 http://localhost:8080/loans/{id}
 ```
 
-###Logika bizesowa
+**Logika bizesowa**
 
 Zasady:
 + Kredytobiorca może złożyć wniosek o przyznanie pożyczki na określoną kwotę oraz preferowany czas spłaty. 
@@ -38,7 +38,7 @@ Przeciwwskazania:
 + Kredytobiorcy nie udziela się pożyczki na maksymalną kwotę, jeśli składa on wniosek w godzinach 00:00 - 06:00;
 + Kredytobiorca nie może złożyć więcej jak 3 wnioski z jednego adresu IP
 
-####variables.properties:
+**variables.properties**
 
 Zawiera stałe dane podane w treści wytycznych:
 + amount.max - maksymalna kwota pożyczki;
@@ -46,7 +46,7 @@ Zawiera stałe dane podane w treści wytycznych:
 + repayment.prolongation - stały czas jednorazowej prolongaty;
 + proposals.from.same.ip - ilość wniosków, które można złożyć z tego samego adresu.
 
-###Uruchomienie 
+**Uruchomienie** 
 
 Aplikacja uruchamia się w IDE lub przy pomocy komendy:
 ```javascript
